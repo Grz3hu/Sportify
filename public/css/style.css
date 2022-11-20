@@ -1,0 +1,112 @@
+body {
+	margin: 0;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	background: linear-gradient(180deg, #FF3D00 0%, #411000 74.53%, #000000 100%);
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo {
+	width: 50%;
+	height: auto;
+	text-align: center;
+}
+
+
+.login-container, .register-container {
+	width: 50%;
+}
+
+img {
+	max-width: 100%;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 80%;
+	height: 40vh;
+}
+
+button {
+	width: 45%;
+	background: radial-gradient(138.31% 1928.54% at 50.17% 50.63%, #000000 0%, rgba(2, 2, 2, 0) 100%);
+	border: none;
+	border-radius: 20px;
+
+	margin: 1em;
+
+	font-family: 'Inter', sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 120%;
+	line-height: 3em;
+	text-align: center;
+	letter-spacing: 0.3em;
+
+	color: #FFFFFF;
+}
+
+#register {
+	color: #FF3D00;
+}
+
+input {
+	width: 45%;
+	border: none;
+	border-radius: 20px;
+	margin: 1em;
+
+	font-family: 'Inter', sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 120%;
+	color: #878787;
+	line-height: 3em;
+	text-align: center;
+	letter-spacing: 0.3em;
+}
+
+input:focus {
+	color: #000000;
+}
+
+@media only screen and (max-device-width: 440px) {
+	.container{
+		flex-direction: column;
+		justify-content: center;
+  		align-items: center;
+	}
+
+	* {
+		font-size: 1.2em;
+	}
+
+	.logo {
+		width: 30%;
+		height: 25%;
+	}
+	
+	.login-container, .register-container {
+		width: 50%;
+		height: 50%;
+	}
+
+	form {
+		margin: auto;
+	}
+
+	input, button{
+		width: 180%;
+		margin: 0.5em;
+	}
+}
