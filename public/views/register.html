@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<title>Register</title>
+	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,16 +13,20 @@
 		<div class="logo">
 			<img src="../../img/logo_title.svg" >
 		</div>
-		<div class="register-container">
-			<form>
-				<input name="name" type="text" placeholder="name">
-				<input name="phone-number" type="text" placeholder="phone number">
-				<input name="email" type="email" placeholder="email@example.com">
-				<input name="password" type="password" placeholder="password">
-				<input name="password" type="password" placeholder="repeat password">
-				<button id="register">Register</button>
-				<button type="button" onclick="location.href='login.html';" id="login">Login</button>
-			</form>
-		</div>
+			<div class="register-container">
+				<form>
+					<input name="name" type="text" placeholder="name">
+					<input name="phone-number" type="text" placeholder="phone number">
+					<input name="email" type="email" placeholder="email@example.com">
+					<input name="password" type="password" placeholder="password">
+					<input name="password" type="password" placeholder="repeat password">
+					<div class="file-input">
+						<input class="file" id="file" type="file" accept="image/png, image/jpeg">
+						<label for="file">profile picture</label>
+					</div>
+					<button class="register-button">Register</button>
+					<button type="button" onclick="location.href='login.html';" id="login">Login</button>
+				</form>
+			</div>
 	</div>
 </body>
