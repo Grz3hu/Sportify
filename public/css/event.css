@@ -1,0 +1,40 @@
+section {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 2em;
+	padding: 2em;
+	overflow: auto;
+}
+
+.events > div > img {
+	height: 50%;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 1em 1em 0 0;
+}
+
+.events > div > div {
+	height: 50%;
+
+	margin: 1em;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.events > div {
+	border: 1px solid black;
+	border-radius: 1em 1em 0 0;
+	height: 600px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.social-section {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
