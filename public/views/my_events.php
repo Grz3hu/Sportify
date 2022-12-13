@@ -33,6 +33,13 @@
 				<a href=login class=nav-button>Logout</a>
 			</div>
 		</nav>
+		<div class="popup" onclick="this.style.animation='fade-out 0.3s forwards'"><?php 
+				if(isset($messages)){
+					foreach ($messages as $message) {
+						echo $message;
+					}
+				}
+			?></div>
 		<main>
 			<section class="events">
 				<div class="event">
@@ -40,8 +47,7 @@
 					<div>
 						<h2>Basketball</h2>
 						20.12.2022
-						20.12.2022
-						<p>description</p>
+						<p>Boisko przy szkole</p>
 						<div class="social-section">
 							<i class="fas fa-heart"> 14/22</i>
 							<i class="fas fa-minus-square"></i>
@@ -53,7 +59,7 @@
 					<div>
 						<h2>Cycling</h2>
 						20.12.2022
-						<p>description</p>
+						<p>Jura krakowsko-czestochowska</p>
 						<div class="social-section">
 							<i class="fas fa-heart"> 14/22</i>
 							<i class="fas fa-minus-square"></i>

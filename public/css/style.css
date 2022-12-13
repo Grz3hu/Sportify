@@ -26,10 +26,32 @@ body {
 }
 
 .file {
-  opacity: 0;
-  width: 0.1px;
-  height: 0.1px;
-  position: absolute;
+	opacity: 0;
+	width: 0.1px;
+	height: 0.1px;
+	position: absolute;
+}
+
+.popup {
+        display: inline-block;
+	position: fixed;
+	top: 5vh;
+	min-width: 40vh;
+	height: 5vh;
+
+	line-height: 5vh;
+	font-family: 'Inter', sans-serif;
+	text-align: center;
+	
+	background-color: rgba(217, 217, 217, 0.8);
+	border: 3px solid #00D1FF;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 45px;
+	padding: 1vh;
+}
+
+.popup:empty {
+	display:none;
 }
 
 img {
@@ -99,7 +121,7 @@ input:focus {
 	.container{
 		flex-direction: column;
 		justify-content: center;
-  		align-items: center;
+		align-items: center;
 	}
 
 	* {
@@ -110,7 +132,7 @@ input:focus {
 		width: 30%;
 		height: 25%;
 	}
-	
+
 	.login-container, .register-container {
 		width: 50%;
 	}
@@ -123,4 +145,13 @@ input:focus {
 		width: 180%;
 		margin: 0.5em;
 	}
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
 }

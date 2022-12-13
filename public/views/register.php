@@ -15,16 +15,25 @@
 		</div>
 			<div class="register-container">
 				<form>
+					<div class="message">
+						<?php 
+							if(isset($messages)){
+								foreach ($messages as $message) {
+									echo $message;
+								}
+							}
+						?>
+					</div>
 					<input name="name" type="text" placeholder="name">
-					<input name="phone-number" type="text" placeholder="phone number">
+					<input name="phone_number" type="text" placeholder="phone number">
 					<input name="email" type="email" placeholder="email@example.com">
 					<input name="password" type="password" placeholder="password">
 					<input name="password" type="password" placeholder="repeat password">
 					<div class="file-input">
-						<input class="file" id="file" type="file" accept="image/png, image/jpeg">
+						<input name="profile_pic" class="file" id="file" type="file" accept="image/png, image/jpeg">
 						<label for="file">profile picture</label>
 					</div>
-					<button class="register-button">Register</button>
+					<button type="submit" class="register-button">Register</button>
 					<button type="button" onclick="location.href='login';" id="login">Login</button>
 				</form>
 			</div>

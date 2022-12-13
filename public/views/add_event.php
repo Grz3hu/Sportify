@@ -42,16 +42,25 @@
 			</div>
 		</nav>
 			<div class="add-event-container">
-				<form>
-					<input name="name" type="text" placeholder="choose sport">
+				<form action="add_event" method="POST" ENCTYPE="multipart/form-data">
+					<div class="message">
+						<?php 
+							if(isset($messages)){
+								foreach ($messages as $message) {
+									echo $message;
+								}
+							}
+						?>
+					</div>
+					<input name="category" type="text" placeholder="choose sport">
 					<input name="date" type="date" placeholder="choose when">
-					<input id="location" type="text" placeholder="choose location">
+					<input name="location" id="location" type="text" placeholder="choose location">
 					<div class="file-input">
-						<input class="file" id="file" type="file" accept="image/png, image/jpeg">
+						<input name="event_photo" class="file" id="file" type="file" accept="image/png, image/jpeg">
 						<label for="file">upload picture</label>
 					</div>
 					<div class="event-buttons-container">
-						<button>Add</button>
+						<button type="submit">Add</button>
 						<button type="button" onclick="history.back()">Back</button>
 					</div>
 				</form>
