@@ -19,7 +19,7 @@ class EventController extends AppController
 				dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['event_photo']['name']
 			);
 
-			$project = new Project($_POST['category'],$_POST['date'],$_POST['location',$_POST['event_photo']);
+			$project = new Project($_POST['category'],$_POST['date'],$_POST['location'],$_POST['event_photo']);
 
 
 			$this->messages[] = 'Event added';

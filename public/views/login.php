@@ -15,15 +15,13 @@
 		</div>
 		<div class="login-container">
 			<form action="login" method="POST">
-				<div class="message">
-					<?php 
+				<div class="popup" onclick="this.style.animation='fade-out 0.3s forwards'"><?php 
 						if(isset($messages)){
 							foreach ($messages as $message) {
 								echo $message;
 							}
 						}
-					?>
-				</div>
+				?></div>
 				<input name="email" type="email" placeholder="email@example.com">
 				<input name="password" type="password" placeholder="password">
 				<button type="submit">Login</button>
