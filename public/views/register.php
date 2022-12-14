@@ -14,21 +14,19 @@
 			<img src="public/img/logo_title.svg" >
 		</div>
 			<div class="register-container">
-				<form>
-					<div class="message">
-						<?php 
+				<form action="register" method="POST" ENCTYPE="multipart/form-data">
+					<div class="popup" onclick="this.style.animation='fade-out 0.3s forwards'"><?php 
 							if(isset($messages)){
 								foreach ($messages as $message) {
 									echo $message;
 								}
 							}
-						?>
-					</div>
+					?></div>
 					<input name="name" type="text" placeholder="name">
 					<input name="phone_number" type="text" placeholder="phone number">
 					<input name="email" type="email" placeholder="email@example.com">
 					<input name="password" type="password" placeholder="password">
-					<input name="password" type="password" placeholder="repeat password">
+					<input name="password2" type="password" placeholder="repeat password">
 					<div class="file-input">
 						<input name="profile_pic" class="file" id="file" type="file" accept="image/png, image/jpeg">
 						<label for="file">profile picture</label>

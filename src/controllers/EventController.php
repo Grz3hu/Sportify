@@ -1,6 +1,7 @@
 <?php
 
 require_once 'AppController.php';
+require_once __DIR__.'/../models/Event.php';
 
 class EventController extends AppController
 {
@@ -12,23 +13,24 @@ class EventController extends AppController
 
 	public function add_event()
 	{
-		if($this->isPost() && is_uploaded_file($_FILES['event_photo']['tmp_name']) && $this->validate($_FILES['event_photo']))
+		if($this->isPost() && is_uploaded_file($_FILES['event_photo']['tmp_name']) && $this->validate_file($_FILES['event_photo']))
 		{
 			move_uploaded_file(
 				$_FILES['event_photo']['tmp_name'],
 				dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['event_photo']['name']
 			);
 
-			$project = new Project($_POST['category'],$_POST['date'],$_POST['location'],$_POST['event_photo']);
+			$event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_POST['event_photo']);
 
 
 			$this->messages[] = 'Event added';
 			return $this->render('my_events', ['messages'=> $this->messages]);
 		}
+
 		$this->render('add_event', ['messages'=> $this->messages]);
 	}
 
-	private function validate(array $file): bool
+	private function validate_file(array $file): bool
 	{
 		if($file['size'] > self::MAX_FILE_SIZE) 
 		{
