@@ -4,14 +4,14 @@ class User{
 	private $email;
 	private $password;
 	private $name;
-	private $surname;
+	private $profile_pic;
 
-	public function __construct(string $email, string $password, string $name, string $surname)
+	public function __construct(string $email, string $password, string $name, string $profile_pic)
 	{
 		$this->email = $email;
 		$this->password = $password;
 		$this->name = $name;
-		$this->surname = $surname;
+		$this->profile_pic = $profile_pic;
 	}
 
 
@@ -30,9 +30,9 @@ class User{
 		$this->name = $name;
 	}
 
-	public function setSurname(string $surname)
+	public function setProfilePic(string $profile_pic)
 	{
-		$this->surname = $surname;
+		$this->profile_pic = $profile_pic;
 	}
 
 
@@ -51,8 +51,8 @@ class User{
 		return $this->name;
 	}
 
-	public function getSurname()
+	public function getProfilePic()
 	{
-		return $this->surname;
+		return $this->profile_pic;
 	}
 }

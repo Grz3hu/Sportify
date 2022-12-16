@@ -18,3 +18,21 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - .:/app/
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: sportify_db
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: devsecret #those have to match ones specified in config.php
+      POSTGRES_USER: devuser
+      POSTGRES_DB: devdb
+    ports:
+      - "54320:5432"
+
+volumes:
+  db_data:

@@ -2,6 +2,7 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'/../models/User.php';
+require_once __DIR__.'/../repositories/UserRepository.php';
 
 class SecurityController extends AppController
 {
@@ -13,7 +14,7 @@ class SecurityController extends AppController
 
 	public function login()
 	{
-		$user = new User('dd@o2.pl','admin','John','Snow');
+		$userRepository = new UserRepository();
 
 		if(!$this->isPost()){ 
 			return $this->render('login');
@@ -21,8 +22,9 @@ class SecurityController extends AppController
 
 		$email = $_POST["email"];
 		$password = $_POST["password"];
+		$user = $userRepository->getUserByEmail($email);
 
-		if ($user->getEmail() !== $email) {
+		if (!$user) {
 			return $this->render('login', ['messages' => ['User with this email doesnt exist']]);
 		}
 
@@ -51,6 +53,10 @@ class SecurityController extends AppController
 			$password2 = $_POST["password2"];
 			$profile_pic = $_files['profile_pic']['name'];
 
+			if($password!==$password2){
+				$this->messages[] = 'Passwords do not match';
+				return $this->render('register', ['messages'=> $this->messages]);
+			}
 			//TODO add user to database
 
 			$this->messages[] = 'User added';
