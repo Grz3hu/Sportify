@@ -22,7 +22,11 @@ services:
       - db
 
   db:
-    image: postgres:latest
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    ports:
+      - "54320:5432"
     container_name: sportify_db
     restart: always
     volumes:
@@ -31,8 +35,6 @@ services:
       POSTGRES_PASSWORD: devsecret #those have to match ones specified in config.php
       POSTGRES_USER: devuser
       POSTGRES_DB: devdb
-    ports:
-      - "54320:5432"
 
 volumes:
   db_data:
