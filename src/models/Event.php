@@ -7,9 +7,9 @@ class Event
 	private $location;
 	private $image;
 
-	public function __construct($title, $date, $location, $image)
+	public function __construct($category, $date, $location, $image)
 	{
-		$this->category=$title;
+		$this->category=$category;
 		$this->date=$date;
 		$this->location=$location;
 		$this->image=$image;
@@ -34,7 +34,6 @@ class Event
 	{
 		$this->image = $image;
 	}
-
 
 
 	public function getCategory(): string

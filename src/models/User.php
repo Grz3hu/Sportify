@@ -4,13 +4,15 @@ class User{
 	private $email;
 	private $password;
 	private $name;
+    private $phone_number;
 	private $profile_pic;
 
-	public function __construct(string $email, string $password, string $name, string $profile_pic)
+	public function __construct(string $email, string $password, string $name, string $phone_number,string $profile_pic)
 	{
 		$this->email = $email;
 		$this->password = $password;
 		$this->name = $name;
+        $this->phone_number = $phone_number;
 		$this->profile_pic = $profile_pic;
 	}
 
@@ -35,6 +37,11 @@ class User{
 		$this->profile_pic = $profile_pic;
 	}
 
+    public function setPhoneNumber(string $phone_number): void
+    {
+        $this->phone_number = $phone_number;
+    }
+
 
 	public function getEmail()
 	{
@@ -55,4 +62,9 @@ class User{
 	{
 		return $this->profile_pic;
 	}
+
+    public function getPhoneNumber(): string
+    {
+        return $this->phone_number;
+    }
 }

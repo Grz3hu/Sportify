@@ -16,7 +16,7 @@ class SecurityController extends AppController
 	{
 		$userRepository = new UserRepository();
 
-		if(!$this->isPost()){ 
+		if(!$this->isPost()){
 			return $this->render('login');
 		}
 
@@ -40,7 +40,7 @@ class SecurityController extends AppController
 
 	public function register()
 	{
-		if($this->isPost() && is_uploaded_file($_FILES['profile_pic']['tmp_name']) && $this->validate_file($_FILES['profile_pic']))
+        if($this->isPost() && is_uploaded_file($_FILES['profile_pic']['tmp_name']) && $this->validate_file($_FILES['profile_pic']))
 		{
 			move_uploaded_file(
 				$_FILES['profile_pic']['tmp_name'],
@@ -48,6 +48,7 @@ class SecurityController extends AppController
 			);
 
 			$email = $_POST["email"];
+            $name = $_POST["name"];
 			$phone_number = $_POST["phone_number"];
 			$password = $_POST["password"];
 			$password2 = $_POST["password2"];
@@ -57,7 +58,9 @@ class SecurityController extends AppController
 				$this->messages[] = 'Passwords do not match';
 				return $this->render('register', ['messages'=> $this->messages]);
 			}
-			//TODO add user to database
+
+            $userRepository = new UserRepository();
+            $userRepository->addUser(new User($email,$password,$name,$phone_number,$profile_pic));
 
 			$this->messages[] = 'User added';
 			return $this->render('login', ['messages'=> $this->messages]);
