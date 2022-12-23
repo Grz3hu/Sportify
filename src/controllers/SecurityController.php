@@ -51,7 +51,7 @@ class SecurityController extends AppController
 			$phone_number = $_POST["phone_number"];
 			$password = $_POST["password"];
 			$password2 = $_POST["password2"];
-			$profile_pic = $_files['profile_pic']['name'];
+			$profile_pic = $_FILES['profile_pic']['name'];
 
 			if($password!==$password2){
 				$this->messages[] = 'Passwords do not match';
