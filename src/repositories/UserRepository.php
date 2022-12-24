@@ -69,4 +69,20 @@ class UserRepository extends Repository
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data['user_info_id'];
     }
+    public function getUserIdByEmail(string $email): ?int
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT user_id FROM users WHERE email = :email
+        ');
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        return $data['user_id'];
+    }
 }

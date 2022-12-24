@@ -1,30 +1,47 @@
 <?php
 
 require_once 'Repository.php';
+require_once 'UserRepository.php';
 require_once __DIR__.'/../models/User.php';
 
 class EventRepository extends Repository
 {
-
-    public function getProject(int $project_id): ?Project
+    public function getEvent(int $event_id): ?Event
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE email = :email
+            SELECT * FROM public.events WHERE event_id = :event_id
         ');
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user == false) {
+        if ($event == false) {
             return null;
         }
 
-        return new User(
-            $user['email'],
-            $user['password'],
-            $user['name'],
-            $user['profile_pic']
+        return new Event(
+            $event['category'],
+            $event['date'],
+            $event['location'],
+            $event['image'],
         );
+    }
+
+    public function addEvent(User $user, Event $event){
+        $userRepository = new UserRepository();
+
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO events (category, date, location, picture, creator_id)
+            VALUES (?, ?, ?, ?, ?)
+        ');
+
+        $stmt->execute([
+            $event->getCategory(),
+            $event->getDate(),
+            $event->getLocation(),
+            $event->getPicture(),
+            $userRepository->getUserIdByEmail($user->getEmail())
+        ]);
     }
 }

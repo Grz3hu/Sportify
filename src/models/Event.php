@@ -5,14 +5,14 @@ class Event
 	private $category;
 	private $date;
 	private $location;
-	private $image;
+	private $picture;
 
-	public function __construct($category, $date, $location, $image)
+	public function __construct($category, $date, $location, $picture)
 	{
 		$this->category=$category;
 		$this->date=$date;
 		$this->location=$location;
-		$this->image=$image;
+		$this->picture=$picture;
 	}
 
 	public function setCategory(string $category)
@@ -30,9 +30,9 @@ class Event
 		$this->location = $location;
 	}
 
-	public function setImage(string $image)
+	public function setPicture(string $picture)
 	{
-		$this->image = $image;
+		$this->picture = $picture;
 	}
 
 
@@ -51,8 +51,8 @@ class Event
 		return $this->location;
 	}
 
-	public function getImage(): string
+	public function getPicture(): string
 	{
-		return $this->image;
+		return $this->picture;
 	}
 }

@@ -2,16 +2,23 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'/../models/Event.php';
+require_once __DIR__.'/../repositories/EventRepository.php';
 
 class EventController extends AppController
 {
 	const MAX_FILE_SIZE = 1024*1024;
 	const SUPPORTED_TYPES = ['image/png','image/jpeg'];
 	const UPLOAD_DIRECTORY = '/../public/uploads/';
-
 	private $messages = [];
+    private $eventRepository;
 
-	public function add_event()
+//    public function __construct()
+//    {
+//        parent::__construct();
+//        $eventRepository = new EventRepository();
+//    }
+
+    public function add_event()
 	{
 		if($this->isPost() && is_uploaded_file($_FILES['event_photo']['tmp_name']) && $this->validate_file($_FILES['event_photo']))
 		{
@@ -20,8 +27,11 @@ class EventController extends AppController
 				dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['event_photo']['name']
 			);
 
-			$event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_POST['event_photo']);
+			$event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name']);
 
+            $eventRepository= new EventRepository();
+            //TODO add correct user
+            $eventRepository->addEvent(new User("dd@o2.pl",'123','hui','123456789','tmp'),$event);
 
 			$this->messages[] = 'Event added';
 			return $this->render('my_events', ['messages'=> $this->messages]);
