@@ -27,10 +27,10 @@ SET default_table_access_method = heap;
 CREATE TABLE public.events (
     event_id integer NOT NULL,
     category character varying(250) NOT NULL,
-    date timestamp without time zone,
+    date date NOT NULL,
     location character varying(300) NOT NULL,
     picture character varying(1000) NOT NULL,
-    creator_id integer
+    creator_id integer NOT NULL
 );
 
 
@@ -237,11 +237,13 @@ ALTER TABLE ONLY public.users_sessions ALTER COLUMN session_id SET DEFAULT nextv
 
 ALTER TABLE ONLY public.users_sessions ALTER COLUMN user_id SET DEFAULT nextval('public.users_sessions_user_id_seq'::regclass);
 
+
 --
 -- Name: events_event_id_seq; Type: SEQUENCE SET; Schema: public; Owner: devuser
 --
 
 SELECT pg_catalog.setval('public.events_event_id_seq', 1, true);
+
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: devuser
