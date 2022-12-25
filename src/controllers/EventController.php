@@ -47,8 +47,10 @@ class EventController extends AppController
     }
 
     public function my_events() {
-        //TODO display search_events.html
-        $this->render('my_events');
+        $eventRepository = new EventRepository();
+        //TODO add user session and query events based on user actual id
+        $events = $eventRepository->getUserEvents(5);
+        $this->render('my_events', ['events' => $events]);
     }
 
 	private function validate_file(array $file): bool

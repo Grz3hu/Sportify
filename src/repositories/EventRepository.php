@@ -6,26 +6,27 @@ require_once __DIR__.'/../models/User.php';
 
 class EventRepository extends Repository
 {
-    public function getEvent(int $event_id): ?Event
+    public function getUserEvents(int $creator_id): array
     {
+        $result = [];
+
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.events WHERE event_id = :event_id
+            SELECT * FROM events e LEFT JOIN user_event ue on e.event_id = ue.event_id WHERE e.creator_id = :creator_id OR ue.user_id = :creator_id;
         ');
-        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->bindParam(':creator_id', $creator_id, PDO::PARAM_INT);
         $stmt->execute();
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $event = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($event == false) {
-            return null;
+        foreach ($events as $event) {
+            $result[] = new Event(
+                $event['category'],
+                $event['date'],
+                $event['location'],
+                $event['picture']
+            );
         }
 
-        return new Event(
-            $event['category'],
-            $event['date'],
-            $event['location'],
-            $event['picture']
-        );
+        return $result;
     }
     public function getEvents(): array
     {
