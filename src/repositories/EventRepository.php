@@ -24,8 +24,29 @@ class EventRepository extends Repository
             $event['category'],
             $event['date'],
             $event['location'],
-            $event['image'],
+            $event['picture']
         );
+    }
+    public function getEvents(): array
+    {
+        $result = [];
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM events
+        ');
+        $stmt->execute();
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($events as $event) {
+            $result[] = new Event(
+                $event['category'],
+                $event['date'],
+                $event['location'],
+                $event['picture']
+            );
+        }
+
+        return $result;
     }
 
     public function addEvent(User $user, Event $event){

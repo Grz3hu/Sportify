@@ -35,75 +35,19 @@
 		</nav>
 		<main>
 			<section class="events">
-				<div class="event">
-					<img src="public/img/football.jpg">
-					<div>
-						<h2>Football</h2>
-						20.12.2022
-						<p>Boisko piłkarskie Rapid - MOSiR Katowice, Stęślickiego, Katowice, Poland</p>
-						<div class="social-section">
-							<i class="fas fa-heart"> 14/22</i>
-						</div>
-					</div>
-				</div>
-				<div class="event">
-					<img src="public/img/volleyball.jpg">
-					<div>
-						<h2>Volleyball</h2>
-						20.12.2022
-						<p>description</p>
-						<div class="social-section">
-							<i class="fas fa-heart"> 14/22</i>
-						</div>
-					</div>
-				</div>
-
-
-
-				<div class="event">
-					<img src="public/img/basketball.jpg">
-					<div>
-						<h2>Basketball</h2>
-						20.12.2022
-						<p>description</p>
-						<div class="social-section">
-							<i class="fas fa-heart"> 14/22</i>
-						</div>
-					</div>
-				</div>
-				<div class="event">
-					<img src="public/img/football.jpg">
-					<div>
-						<h2>Football</h2>
-						20.12.2022
-						<p>description</p>
-						<div class="social-section">
-							<i class="fas fa-heart"> 14/22</i>
-						</div>
-					</div>
-				</div>
-				<div class="event">
-					<img src="public/img/cycling.jpg">
-					<div>
-						<h2>Cycling</h2>
-						20.12.2022
-						<p>description</p>
-						<div class="social-section">
-							<i class="fas fa-heart"> 14/22</i>
-						</div>
-					</div>
-				</div>
-				<div class="event">
-					<img src="public/img/volleyball.jpg">
-					<div>
-						<h2>Volleyball</h2>
-						20.12.2022
-						<p>description</p>
-						<div class="social-section">
-							<i class="fas fa-heart"> 14/22</i>
-						</div>
-					</div>
-				</div>
+                <?php foreach ($events as $event): ?>
+				    <div class="event">
+				    	<img src="public/uploads/<?= $event->getPicture(); ?>">
+				    	<div>
+				    		<h2><?= $event->getCategory(); ?></h2>
+                            <?= $event->getDate(); ?>
+				    		<p><?= $event->getLocation(); ?></p>
+				    		<div class="social-section">
+				    			<i class="fas fa-heart"> 14/22</i>
+				    		</div>
+				    	</div>
+				    </div>
+				<?php endforeach; ?>
 			</section>
 		</main>
 	</div>

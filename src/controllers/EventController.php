@@ -40,6 +40,17 @@ class EventController extends AppController
 		$this->render('add_event', ['messages'=> $this->messages]);
 	}
 
+    public function events() {
+        $eventRepository = new EventRepository();
+        $events = $eventRepository->getEvents();
+        $this->render('search_event', ['events' => $events]);
+    }
+
+    public function my_events() {
+        //TODO display search_events.html
+        $this->render('my_events');
+    }
+
 	private function validate_file(array $file): bool
 	{
 		if($file['size'] > self::MAX_FILE_SIZE) 

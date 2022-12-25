@@ -9,6 +9,6 @@ Routing::get('', 'DefaultController');
 Routing::post('login', 'SecurityController');
 Routing::post('add_event', 'EventController');
 Routing::post('register', 'SecurityController');
-Routing::get('events', 'DefaultController');
-Routing::get('my_events', 'DefaultController');
+Routing::get('events', 'EventController');
+Routing::get('my_events', 'EventController');
 Routing::run($path);
