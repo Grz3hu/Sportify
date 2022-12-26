@@ -1,5 +1,6 @@
 const form = document.querySelector("form");
 const emailInput = form.querySelector('input[name="email"]');
+const phoneNumberInput = form.querySelector('input[name="phone_number"]');
 const confirmPasswordInput = form.querySelector('input[name="password2"]');
 
 function markValidation(element, condition) {
@@ -8,6 +9,10 @@ function markValidation(element, condition) {
 
 function isEmailValid (email) {
     return /\S+@\S+\.\S/.test(email);
+}
+
+function isPhoneNumberValid (phone_number) {
+    return /^[0-9]{11}$/.test(phone_number);
 }
 
 function doPasswordsMatch (password, password2) {
@@ -19,7 +24,12 @@ function validateEmail(){
 }
 emailInput.addEventListener('keyup', validateEmail);
 
-function validateConfirmPasword(){
+function validatePhoneNumber(){
+    setTimeout(markValidation(phoneNumberInput, isPhoneNumberValid(phoneNumberInput.value)), 1000);
+}
+phoneNumberInput.addEventListener('keyup', validatePhoneNumber);
+
+function validateConfirmPassword(){
     setTimeout(
         function (){
             const condition = doPasswordsMatch(confirmPasswordInput.previousElementSibling.value, confirmPasswordInput.value);
@@ -27,4 +37,4 @@ function validateConfirmPasword(){
         },
         1000);
 }
-confirmPasswordInput.addEventListener('keyup', validateConfirmPasword);
+confirmPasswordInput.addEventListener('keyup', validateConfirmPassword);

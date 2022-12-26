@@ -54,12 +54,23 @@ class SecurityController extends AppController
 			$password2 = $_POST["password2"];
 			$profile_pic = $_FILES['profile_pic']['name'];
 
+            $userRepository = new UserRepository();
+            if($userRepository->getUserByEmail($email))
+            {
+                $this->messages[] = 'User with this email already exists';
+                return $this->render('register', ['messages'=> $this->messages]);
+            }
+
+            if(!preg_match('/^[0-9]{11}+$/', $phone_number)){
+                $this->messages[] = 'Incorrect phone number';
+                return $this->render('register', ['messages'=> $this->messages]);
+            }
+
 			if($password!==$password2){
 				$this->messages[] = 'Passwords do not match';
 				return $this->render('register', ['messages'=> $this->messages]);
 			}
 
-            $userRepository = new UserRepository();
             $userRepository->addUser(new User($email,$password,$name,$phone_number,$profile_pic));
 
 			$this->messages[] = 'User added';
