@@ -20,6 +20,7 @@ class EventController extends AppController
 
     public function add_event()
 	{
+        session_start();
 		if($this->isPost() && is_uploaded_file($_FILES['event_photo']['tmp_name']) && $this->validate_file($_FILES['event_photo']))
 		{
 			move_uploaded_file(
@@ -27,17 +28,21 @@ class EventController extends AppController
 				dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['event_photo']['name']
 			);
 
-			$event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name']);
-
             $eventRepository= new EventRepository();
-            //TODO add correct user
-            $eventRepository->addEvent(new User("dd@o2.pl",'123','hui','123456789','tmp'),$event);
+            $userRepository = new UserRepository();
+            $event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name']);
+            $user = $userRepository->getUserByEmail($_SESSION['logged_in_user_email']);
+
+            $eventRepository->addEvent($user, $event);
 
 			$this->messages[] = 'Event added';
-			return $this->render('my_events', ['messages'=> $this->messages]);
+
+            $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
+            $events = $eventRepository->getUserEvents($user_id);
+            return $this->render('my_events', ['messages' => $this->messages, 'events' => $events]);
 		}
 
-		$this->render('add_event', ['messages'=> $this->messages]);
+        $this->render('add_event', ['messages'=> $this->messages]);
 	}
 
     public function events() {
@@ -47,9 +52,12 @@ class EventController extends AppController
     }
 
     public function my_events() {
+        session_start();
+        $userRepository = new UserRepository();
         $eventRepository = new EventRepository();
-        //TODO add user session and query events based on user actual id
-        $events = $eventRepository->getUserEvents(5);
+
+        $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
+        $events = $eventRepository->getUserEvents($user_id);
         $this->render('my_events', ['events' => $events]);
     }
 

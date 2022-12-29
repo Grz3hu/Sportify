@@ -34,6 +34,8 @@ class SecurityController extends AppController
 
 		/* return $this->render('my_events'); */
 
+        session_start();
+        $_SESSION['logged_in_user_email'] = $email;
 		$url = "http://$_SERVER[HTTP_HOST]";
 		header("Location: {$url}/my_events");
 	}
@@ -78,6 +80,16 @@ class SecurityController extends AppController
 		}
 		$this->render('register', ['messages'=> $this->messages]);
 	}
+
+    public function logout()
+    {
+        session_start();
+        unset($_SESSION);
+        session_destroy();
+
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/login");
+    }
 
 	private function validate_file(array $file): bool
 	{
