@@ -152,6 +152,31 @@ input:focus {
 		width: 180%;
 		margin: 0.5em;
 	}
+
+	nav > div {
+		font-size: 0;
+	}
+
+	nav > div > a > i {
+		font-size: 7vw;
+	}
+
+	.events {
+		display: flex;
+		flex-direction: column;
+		overflow: auto;
+		font-size: 0.6em;
+	}
+
+	.events > div {
+		height: auto !important;
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	.nav-logo {
+		display: none;
+	}
 }
 
 @keyframes fade-out {
