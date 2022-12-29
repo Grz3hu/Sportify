@@ -7,7 +7,8 @@ $path = parse_url($path, PHP_URL_PATH);
 
 Routing::get('', 'DefaultController');
 Routing::post('login', 'SecurityController');
-Routing::post('logout', 'SecurityController');
+Routing::get('logout', 'SecurityController');
+Routing::get('admin', 'SecurityController');
 Routing::post('add_event', 'EventController');
 Routing::post('register', 'SecurityController');
 Routing::get('events', 'EventController');

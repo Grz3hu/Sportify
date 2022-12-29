@@ -12,12 +12,6 @@ class EventController extends AppController
 	private $messages = [];
     private $eventRepository;
 
-//    public function __construct()
-//    {
-//        parent::__construct();
-//        $eventRepository = new EventRepository();
-//    }
-
     public function add_event()
 	{
         session_start();

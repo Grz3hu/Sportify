@@ -1,0 +1,17 @@
+.users-container {
+    background: linear-gradient(180deg, #FF3D00 0%, #411000 74.53%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    font-size: 1.5em;
+}
+
+table {
+    width: 80%;
+}
+
+table, th, td {
+    border: 1px solid;
+}

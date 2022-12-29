@@ -29,6 +29,30 @@ class UserRepository extends Repository
         );
     }
 
+    public function getAllUsers(){
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM users u JOIN users_info ui ON u.user_id = ui.user_info_id
+        ');
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$users) {
+            return null;
+        }
+
+        $result = [];
+        foreach ($users as $user) {
+            $result[] = new User(
+                $user['email'],
+                $user['password'],
+                $user['name'],
+                $user['phone_number'],
+                $user['profile_picture']
+            );
+        }
+
+        return $result;
+    }
 
     public function addUser(User $user)
     {
@@ -84,5 +108,21 @@ class UserRepository extends Repository
         }
 
         return $data['user_id'];
+    }
+
+    public function isUserAdmin(string $email): bool
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM admins WHERE email = :email
+        ');
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return false;
+        }
+        return true;
     }
 }

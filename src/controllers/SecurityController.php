@@ -107,4 +107,24 @@ class SecurityController extends AppController
 
 		return true;
 	}
+
+    public function admin()
+    {
+        session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
+
+        $userRepository = new UserRepository();
+        session_start();
+        $email = $_SESSION['logged_in_user_email'];
+        if (!$userRepository->isUserAdmin($email)) {
+            $this->messages[] = 'You are not allowed to view this page';
+            return $this->render('login', ['messages' => $this->messages]);
+        }
+
+        $users = $userRepository->getAllUsers();
+        return $this->render('admin', ['users' => $users]);
+    }
 }
