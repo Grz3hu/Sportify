@@ -12,8 +12,9 @@ class SecurityController extends AppController
 
 	private $messages = [];
 
-	public function login()
-	{
+    private $bcrypt_options = ['cost' => 11];
+    public function login()
+    {
 		$userRepository = new UserRepository();
 
 		if(!$this->isPost()){
@@ -28,7 +29,7 @@ class SecurityController extends AppController
 			return $this->render('login', ['messages' => ['User with this email doesnt exist']]);
 		}
 
-		if ($user->getPassword() !== $password) {
+        if (!password_verify($password, $user->getPassword())) {
 			return $this->render('login', ['messages' => ['Wrong password']]);
 		}
 
@@ -73,7 +74,8 @@ class SecurityController extends AppController
 				return $this->render('register', ['messages'=> $this->messages]);
 			}
 
-            $userRepository->addUser(new User($email,$password,$name,$phone_number,$profile_pic));
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT, $this->bcrypt_options);
+            $userRepository->addUser(new User($email,$hashed_password,$name,$phone_number,$profile_pic));
 
 			$this->messages[] = 'User added';
 			return $this->render('login', ['messages'=> $this->messages]);
