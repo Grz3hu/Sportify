@@ -11,35 +11,8 @@
 	<script src="https://kit.fontawesome.com/932f8a40c9.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="events-container">
-		<nav>
-			<div>
-				<img src="public/img/logo_title.svg" >
-			</div>
-			<div>
-				<i class="fa-regular fa-calendar-plus"></i>
-				<a href=add_event class=nav-button>Add event</a>
-			</div>
-			<div class=selected>
-				<i class="fa-solid fa-calendar-days"></i>
-				<a href=my_events class=nav-button>My events</a>
-			</div>
-			<div>
-				<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-				<a href=events class=nav-button>Search events</a>
-			</div>
-			<div>
-				<i class="fa-solid fa-right-from-bracket"></i> 
-				<a href=login class=nav-button>Logout</a>
-			</div>
-		</nav>
-		<div class="popup" onclick="this.style.animation='fade-out 0.3s forwards'"><?php 
-				if(isset($messages)){
-					foreach ($messages as $message) {
-						echo $message;
-					}
-				}
-			?></div>
+    <div class="events-container">
+        <?php $currentPage='my_events'; include('nav_bar.php') ?>
 		<main>
 			<section class="events">
                 <?php foreach ($events as $event): ?>

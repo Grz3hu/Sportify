@@ -12,27 +12,7 @@
 </head>
 <body>
 	<div class="events-container">
-		<nav>
-			<div>
-				<img src="public/img/logo_title.svg" >
-			</div>
-			<div>
-				<i class="fa-regular fa-calendar-plus"></i>
-				<a href=add_event class=nav-button>Add event</a>
-			</div>
-			<div>
-				<i class="fa-solid fa-calendar-days"></i>
-				<a href=my_events class=nav-button>My events</a>
-			</div>
-			<div class=selected>
-				<i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-				<a href=events class=nav-button>Search events</a>
-			</div>
-			<div>
-				<i class="fa-solid fa-right-from-bracket"></i> 
-				<a href=login class=nav-button>Logout</a>
-			</div>
-		</nav>
+        <?php $currentPage='events'; include('nav_bar.php') ?>
 		<main>
 			<section class="events">
                 <?php foreach ($events as $event): ?>
