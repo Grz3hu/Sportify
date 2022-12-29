@@ -21,6 +21,10 @@ class EventController extends AppController
     public function add_event()
 	{
         session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
 		if($this->isPost() && is_uploaded_file($_FILES['event_photo']['tmp_name']) && $this->validate_file($_FILES['event_photo']))
 		{
 			move_uploaded_file(
@@ -46,6 +50,11 @@ class EventController extends AppController
 	}
 
     public function events() {
+        session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
         $eventRepository = new EventRepository();
         $events = $eventRepository->getEvents();
         $this->render('search_event', ['events' => $events]);
@@ -53,6 +62,10 @@ class EventController extends AppController
 
     public function my_events() {
         session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
         $userRepository = new UserRepository();
         $eventRepository = new EventRepository();
 
@@ -77,5 +90,4 @@ class EventController extends AppController
 
 		return true;
 	}
-
 }

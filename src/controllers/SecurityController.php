@@ -33,8 +33,6 @@ class SecurityController extends AppController
 			return $this->render('login', ['messages' => ['Wrong password']]);
 		}
 
-		/* return $this->render('my_events'); */
-
         session_start();
         $_SESSION['logged_in_user_email'] = $email;
 		$url = "http://$_SERVER[HTTP_HOST]";
