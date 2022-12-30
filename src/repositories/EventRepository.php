@@ -28,13 +28,23 @@ class EventRepository extends Repository
 
         return $result;
     }
-    public function getEvents(): array
+    public function getEvents($user_id): array
     {
         $result = [];
 
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM events
+            SELECT e.event_id, category, date, location, picture
+            FROM events e LEFT JOIN user_event ue on e.event_id = ue.event_id
+            GROUP BY e.event_id
+            
+            EXCEPT
+            
+            SELECT e.event_id, category, date, location, picture
+            FROM events e LEFT JOIN user_event ue on e.event_id = ue.event_id
+            WHERE creator_id=:creator_id OR ue.user_id=:creator_id
+            GROUP BY e.event_id
         ');
+        $stmt->bindParam(':creator_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -67,13 +77,24 @@ class EventRepository extends Repository
         ]);
     }
 
-    public function getEventByTitle(string $searchString)
+    public function getEventByTitle(int $user_id, string $searchString)
     {
         $searchString = '%' . strtolower($searchString) . '%';
 
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM events WHERE LOWER(category) LIKE :search OR LOWER(location) LIKE :search
+            SELECT e.event_id, category, date, location, picture
+            FROM events e LEFT JOIN user_event ue on e.event_id = ue.event_id
+            WHERE LOWER(category) LIKE :search OR LOWER(location) LIKE :search
+            GROUP BY e.event_id
+            
+            EXCEPT
+            
+            SELECT e.event_id, category, date, location, picture
+            FROM events e LEFT JOIN user_event ue on e.event_id = ue.event_id
+            WHERE creator_id=:creator_id OR ue.user_id=:creator_id
+            GROUP BY e.event_id
         ');
+        $stmt->bindParam(':creator_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
         $stmt->execute();
 

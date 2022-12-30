@@ -55,8 +55,10 @@ class EventController extends AppController
             $this->messages[] = 'Please log in to see this page';
             return $this->render('login', ['messages'=> $this->messages]);
         }
+        $userRepository = new UserRepository();
+        $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
         $eventRepository = new EventRepository();
-        $events = $eventRepository->getEvents();
+        $events = $eventRepository->getEvents($user_id);
         $this->render('search_event', ['events' => $events]);
     }
 
@@ -67,6 +69,8 @@ class EventController extends AppController
             return $this->render('login', ['messages'=> $this->messages]);
         }
         $eventRepository = new EventRepository();
+        $userRepository = new UserRepository();
+        $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
 
         $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
@@ -77,7 +81,7 @@ class EventController extends AppController
             header('Content-type: application/json');
             http_response_code(200);
 
-            echo json_encode($eventRepository->getEventByTitle($decoded['search']));
+            echo json_encode($eventRepository->getEventByTitle($user_id, $decoded['search']));
         }
     }
 
