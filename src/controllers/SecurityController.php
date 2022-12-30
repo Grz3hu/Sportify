@@ -33,7 +33,10 @@ class SecurityController extends AppController
 			return $this->render('login', ['messages' => ['Wrong password']]);
 		}
 
+        $userId = $userRepository->getUserIdByEmail($user->getEmail());
+
         session_start();
+        $userRepository->userLogin($userId);
         $_SESSION['logged_in_user_email'] = $email;
 		$url = "http://$_SERVER[HTTP_HOST]";
 		header("Location: {$url}/my_events");
@@ -84,6 +87,9 @@ class SecurityController extends AppController
     public function logout()
     {
         session_start();
+        $userRepository=new UserRepository();
+        $userId = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
+        $userRepository->userLogout($userId);
         unset($_SESSION);
         session_destroy();
 

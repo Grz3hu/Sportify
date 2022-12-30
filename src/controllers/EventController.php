@@ -26,6 +26,12 @@ class EventController extends AppController
 				dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['event_photo']['name']
 			);
 
+            $date=new DateTime($_POST['date']);
+            if($date < new DateTime()) {
+                $this->messages[] = 'Date has to be future';
+                return $this->render('add_event', ['messages' => $this->messages]);
+            }
+
             $eventRepository= new EventRepository();
             $userRepository = new UserRepository();
             $event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name']);

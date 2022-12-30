@@ -21,6 +21,41 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: devuser
+--
+
+CREATE TABLE public.users (
+    user_id integer NOT NULL,
+    email character varying(100) NOT NULL,
+    password character varying(60) NOT NULL,
+    is_admin boolean DEFAULT false NOT NULL,
+    enabled boolean DEFAULT true NOT NULL,
+    created_at timestamp without time zone DEFAULT now(),
+    user_info_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO devuser;
+
+--
+-- Name: admins; Type: VIEW; Schema: public; Owner: devuser
+--
+
+CREATE VIEW public.admins AS
+ SELECT users.user_id,
+    users.email,
+    users.password,
+    users.is_admin,
+    users.enabled,
+    users.created_at,
+    users.user_info_id
+   FROM public.users
+  WHERE (users.is_admin = true);
+
+
+ALTER TABLE public.admins OWNER TO devuser;
+
+--
 -- Name: events; Type: TABLE; Schema: public; Owner: devuser
 --
 
@@ -69,23 +104,6 @@ CREATE TABLE public.user_event (
 
 
 ALTER TABLE public.user_event OWNER TO devuser;
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: devuser
---
-
-CREATE TABLE public.users (
-    user_id integer NOT NULL,
-    email character varying(100) NOT NULL,
-    password character varying(60) NOT NULL,
-    is_admin boolean DEFAULT false NOT NULL,
-    enabled boolean DEFAULT true NOT NULL,
-    created_at timestamp without time zone DEFAULT now(),
-    user_info_id integer NOT NULL
-);
-
-
-ALTER TABLE public.users OWNER TO devuser;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: devuser
@@ -153,7 +171,7 @@ CREATE TABLE public.users_sessions (
     session_id integer NOT NULL,
     user_id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
-    valid_until timestamp without time zone DEFAULT ((now())::date + 1) NOT NULL
+    destoryed_at timestamp without time zone DEFAULT ((now())::date + 1)
 );
 
 
@@ -249,14 +267,14 @@ SELECT pg_catalog.setval('public.events_event_id_seq', 1, true);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: devuser
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 4, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
 -- Name: users_info_user_info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: devuser
 --
 
-SELECT pg_catalog.setval('public.users_info_user_info_id_seq', 8, true);
+SELECT pg_catalog.setval('public.users_info_user_info_id_seq', 1, true);
 
 
 --

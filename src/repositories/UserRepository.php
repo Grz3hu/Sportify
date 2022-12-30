@@ -125,4 +125,30 @@ class UserRepository extends Repository
         }
         return true;
     }
+
+    public function userLogin(int $userId)
+    {
+        $current_date = new DateTime();
+        $_SESSION['created_at']= $current_date->format('Y-m-d H:i:s');
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO users_sessions (session_id, user_id, created_at, destoryed_at)
+            VALUES (DEFAULT, ?, ?, null);
+        ');
+        $stmt->execute([
+            $userId,
+            $_SESSION['created_at']
+        ]);
+    }
+
+    public function userLogout(int $userId){
+        $stmt = $this->database->connect()->prepare('
+            UPDATE users_sessions
+            SET destoryed_at = now()
+            WHERE user_id = :user_id
+              AND created_at = :created_at
+        ');
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->bindParam(':created_at', $_SESSION['created_at'], PDO::PARAM_STR);
+        $stmt->execute();
+    }
 }
