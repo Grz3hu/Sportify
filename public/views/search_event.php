@@ -25,7 +25,7 @@
                             <div id="date"><?= $event->getDate(); ?></div>
 				    		<p><?= $event->getLocation(); ?></p>
 				    		<div class="social-section">
-				    			<i class="fas fa-heart"> 14/22</i>
+				    			<i class="fas fa-heart"> <?= $event->getLikes(); ?></i>
 				    		</div>
 				    	</div>
 				    </div>
@@ -43,7 +43,7 @@
             <div id="date">date</div>
             <p>location</p>
             <div class="social-section">
-                <i class="fas fa-heart"> 14/22</i>
+                <i class="fas fa-heart">likes</i>
             </div>
         </div>
     </div>

@@ -48,5 +48,8 @@ function createEvent(event){
     const location = clone.querySelector("p");
     location.innerHTML = event.location;
 
+    const likes = clone.querySelector(".fa-heart");
+    likes.innerHTML = " " + event.likes;
+
     eventsContainer.appendChild(clone)
 }

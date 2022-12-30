@@ -34,7 +34,7 @@ class EventController extends AppController
 
             $eventRepository= new EventRepository();
             $userRepository = new UserRepository();
-            $event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name']);
+            $event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name'],0);
             $user = $userRepository->getUserByEmail($_SESSION['logged_in_user_email']);
 
             $eventRepository->addEvent($user, $event);
