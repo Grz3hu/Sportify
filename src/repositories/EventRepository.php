@@ -66,4 +66,17 @@ class EventRepository extends Repository
             $userRepository->getUserIdByEmail($user->getEmail())
         ]);
     }
+
+    public function getEventByTitle(string $searchString)
+    {
+        $searchString = '%' . strtolower($searchString) . '%';
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM events WHERE LOWER(category) LIKE :search OR LOWER(location) LIKE :search
+        ');
+        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -4,7 +4,7 @@ section {
 	grid-gap: 2em;
 	padding: 2em;
 	overflow: auto;
-	height: 90%;
+	height: 80vh;
 }
 
 .events > div > img {

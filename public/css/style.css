@@ -124,6 +124,10 @@ input:focus {
 	outline: none;
 }
 
+#searchbar-mobile{
+	display: none;
+}
+
 @media only screen and (max-device-width: 440px) {
 	.container{
 		flex-direction: column;
@@ -170,6 +174,18 @@ input:focus {
 
 	.events > div {
 		height: auto !important;
+	}
+
+	#searchbar {
+		display: none; !important;
+	}
+
+	#searchbar-mobile {
+		display: revert;
+		width: 80%;
+		margin-right: 10%;
+		margin-left: 10%;
+		line-height: 6vh;
 	}
 }
 

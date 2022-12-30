@@ -60,6 +60,27 @@ class EventController extends AppController
         $this->render('search_event', ['events' => $events]);
     }
 
+    public function search() {
+        session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
+        $eventRepository = new EventRepository();
+
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if($contentType === 'application/json') {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-type: application/json');
+            http_response_code(200);
+
+            echo json_encode($eventRepository->getEventByTitle($decoded['search']));
+        }
+    }
+
     public function my_events() {
         session_start();
         if(!isset($_SESSION['logged_in_user_email'])) {
