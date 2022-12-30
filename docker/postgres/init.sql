@@ -30,8 +30,7 @@ CREATE TABLE public.users (
     password character varying(60) NOT NULL,
     is_admin boolean DEFAULT false NOT NULL,
     enabled boolean DEFAULT true NOT NULL,
-    created_at timestamp without time zone DEFAULT now(),
-    user_info_id integer NOT NULL
+    created_at timestamp without time zone DEFAULT now()
 );
 
 
@@ -47,8 +46,7 @@ CREATE VIEW public.admins AS
     users.password,
     users.is_admin,
     users.enabled,
-    users.created_at,
-    users.user_info_id
+    users.created_at
    FROM public.users
   WHERE (users.is_admin = true);
 
@@ -348,11 +346,11 @@ ALTER TABLE ONLY public.users_sessions
 
 
 --
--- Name: users users_users_info_user_info_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: devuser
+-- Name: users_info users_info_users_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: devuser
 --
 
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_users_info_user_info_id_fk FOREIGN KEY (user_info_id) REFERENCES public.users_info(user_info_id);
+ALTER TABLE ONLY public.users_info
+    ADD CONSTRAINT users_info_users_user_id_fk FOREIGN KEY (user_info_id) REFERENCES public.users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
