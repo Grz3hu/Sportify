@@ -37,6 +37,7 @@ class EventRepository extends Repository
 
         foreach ($events as $event) {
             $result[] = new Event(
+                $event['event_id'],
                 $event['category'],
                 $event['date'],
                 $event['location'],
@@ -79,6 +80,7 @@ class EventRepository extends Repository
 
         foreach ($events as $event) {
             $result[] = new Event(
+                $event['event_id'],
                 $event['category'],
                 $event['date'],
                 $event['location'],
@@ -140,5 +142,46 @@ class EventRepository extends Repository
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function likeEvent($user_id, $event_id){
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO public.user_event (user_id, event_id)
+            VALUES (:user_id, :event_id);
+        ');
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function dislikeEvent($user_id, $event_id){
+        if($this->isEventOwner($user_id, $event_id))
+            return $this->removeEvent($event_id);
+
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM public.user_event WHERE user_id=:user_id AND event_id=:event_id
+        ');
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    private function isEventOwner($user_id, $event_id){
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM events WHERE creator_id=:user_id AND event_id=:event_id
+        ');
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $response = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (bool)$response;
+    }
+
+    private function removeEvent($event_id){
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM public.events WHERE event_id = :event_id
+        ');
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }

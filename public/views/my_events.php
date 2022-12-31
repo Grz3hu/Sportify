@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="public/css/style.css">
 	<link rel="stylesheet" type="text/css" href="public/css/events.css">
 	<link rel="stylesheet" type="text/css" href="public/css/event.css">
+    <script type="text/javascript" src="public/js/dislike.js" defer></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
@@ -16,7 +17,7 @@
 		<main>
 			<section class="events">
                 <?php foreach ($events as $event): ?>
-                    <div class="event">
+                    <div id="<?= $event->getEventId(); ?>" class="event">
                         <img src="public/uploads/<?= $event->getPicture(); ?>">
                         <div>
                             <h2><?= $event->getCategory(); ?></h2>

@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="public/css/events.css">
 	<link rel="stylesheet" type="text/css" href="public/css/event.css">
     <script type="text/javascript" src="public/js/search.js" defer></script>
+    <script type="text/javascript" src="public/js/like.js" defer></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
@@ -18,14 +19,14 @@
             <input id="searchbar-mobile" placeholder="Search..">
 			<section class="events">
                 <?php foreach ($events as $event): ?>
-				    <div class="event">
+                    <div id="<?= $event->getEventId(); ?>" class="event">
 				    	<img src="public/uploads/<?= $event->getPicture(); ?>">
 				    	<div>
 				    		<h2><?= $event->getCategory(); ?></h2>
                             <div id="date"><?= $event->getDate(); ?></div>
 				    		<p><?= $event->getLocation(); ?></p>
 				    		<div class="social-section">
-				    			<i class="fas fa-heart"> <?= $event->getLikes(); ?></i>
+				    			<i class="fa-regular fa-heart"> <?= $event->getLikes(); ?></i>
 				    		</div>
 				    	</div>
 				    </div>
@@ -38,7 +39,7 @@
 <template id="event-template">
     <div class="event">
         <img src="">
-        <div>
+        <div id="">
             <h2>category</h2>
             <div id="date">date</div>
             <p>location</p>

@@ -34,7 +34,7 @@ class EventController extends AppController
 
             $eventRepository= new EventRepository();
             $userRepository = new UserRepository();
-            $event = new Event($_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name'],0);
+            $event = new Event(-1, $_POST['category'],$_POST['date'],$_POST['location'],$_FILES['event_photo']['name'],0);
             $user = $userRepository->getUserByEmail($_SESSION['logged_in_user_email']);
 
             $eventRepository->addEvent($user, $event);
@@ -97,6 +97,32 @@ class EventController extends AppController
         $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
         $events = $eventRepository->getUserEvents($user_id);
         $this->render('my_events', ['events' => $events]);
+    }
+
+    public function like($event_id){
+        session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
+        $userRepository = new UserRepository();
+        $eventRepository = new EventRepository();
+        $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
+
+        $eventRepository->likeEvent($user_id, $event_id);
+    }
+
+    public function dislike($event_id){
+        session_start();
+        if(!isset($_SESSION['logged_in_user_email'])) {
+            $this->messages[] = 'Please log in to see this page';
+            return $this->render('login', ['messages'=> $this->messages]);
+        }
+        $userRepository = new UserRepository();
+        $eventRepository = new EventRepository();
+        $user_id = $userRepository->getUserIdByEmail($_SESSION['logged_in_user_email']);
+
+        $eventRepository->dislikeEvent($user_id, $event_id);
     }
 
 	private function validate_file(array $file): bool

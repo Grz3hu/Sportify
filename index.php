@@ -14,4 +14,7 @@ Routing::post('search', 'EventController');
 Routing::post('register', 'SecurityController');
 Routing::get('events', 'EventController');
 Routing::get('my_events', 'EventController');
+Routing::get('like', 'EventController');
+Routing::get('dislike', 'EventController');
+
 Routing::run($path);

@@ -36,6 +36,9 @@ function createEvent(event){
     const template = document.querySelector("#event-template");
     const clone = template.content.cloneNode(true);
 
+    const div = clone.querySelector("div");
+    div.id = event.event_id;
+
     const image = clone.querySelector("img");
     image.src = `/public/uploads/${event.picture}`;
 

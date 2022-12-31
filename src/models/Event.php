@@ -2,14 +2,16 @@
 
 class Event
 {
+    private $event_id;
 	private $category;
 	private $date;
 	private $location;
 	private $picture;
     private $likes;
 
-	public function __construct($category, $date, $location, $picture, $likes=0)
+	public function __construct($event_id, $category, $date, $location, $picture, $likes=0)
 	{
+        $this->event_id=$event_id;
 		$this->category=$category;
 		$this->date=$date;
 		$this->location=$location;
@@ -42,6 +44,11 @@ class Event
         $this->likes = $likes;
     }
 
+    public function setEventId($event_id): void
+    {
+        $this->event_id = $event_id;
+    }
+
 
 	public function getCategory(): string
 	{
@@ -66,5 +73,10 @@ class Event
     public function getLikes(): int
     {
         return $this->likes;
+    }
+
+    public function getEventId()
+    {
+        return $this->event_id;
     }
 }
